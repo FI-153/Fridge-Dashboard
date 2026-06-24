@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include "_head.html" %}
+</head>
+<body>
+  <div class="offline_wrapper">
+    <div class="offline_card">
+      <h1 class="offline_title">Home Assistant is Unreachable</h1>
+      <div class="clock" id="clock">{{ time }}</div>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='js/clock.js') }}"></script>
+</body>
+</html>

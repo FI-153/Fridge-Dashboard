@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include "_head.html" %}
+</head>
+
+<body>
+  <table class="dashboard">
+    <tr>
+      <td class="col col_left">
+        <div class="stack">
+          <div class="card clock_card">
+            <div class="clock" id="clock">{{ time }}</div>
+          </div>
+          <div class="card metric_card power_card">
+            <div class="metric_label">Power</div>
+            <div class="metric_value">
+              <span class="value">{{ power.value }}</span><span class="unit">{{ power.unit }}</span>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td class="col col_center">
+        <div class="card metric_card">
+          <img class="icon" src="{{ url_for('static', filename='assets/thermometer.svg') }}" alt="temperature">
+          <div class="metric_value big">
+            <span class="value">{{ temperature.value }}</span><span class="unit">{{ temperature.unit }}</span>
+          </div>
+        </div>
+      </td>
+      <td class="col col_right">
+        <div class="card metric_card">
+          <img class="icon" src="{{ url_for('static', filename='assets/droplet.svg') }}" alt="humidity">
+          <div class="metric_value big">
+            <span class="value">{{ humidity.value }}</span><span class="unit">{{ humidity.unit }}</span>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <script src="{{ url_for('static', filename='js/clock.js') }}"></script>
+</body>
+
+</html>

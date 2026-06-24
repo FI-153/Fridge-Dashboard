@@ -1,0 +1,176 @@
+/*
+ * Fridge dashboard styling.
+ * Target: iPad mini 1 / Safari 9. Flexbox is OK; CSS Grid and CSS custom
+ * properties are NOT supported, so they are avoided. -webkit- prefixes are
+ * included for the old WebKit flexbox implementation.
+ */
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  overflow: hidden;
+}
+
+/* Full-screen 3-column skeleton. The table provides the layout; the visible
+   "widgets" are the inner .card elements. */
+table.dashboard {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+td.col {
+  width: 33.33%;
+  height: 100%;
+  padding: 14px;
+  vertical-align: middle;
+}
+
+/* Apple-widget card */
+.card {
+  width: 100%;
+  height: 100%;
+  background-color: #1c1c1e;
+  border-radius: 28px;
+  -webkit-box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+/* Shared vertical-centering stack + inner padding for every content card.
+   Old WebKit (Safari 9) needs the -webkit-box / -webkit-flex fallbacks.
+   Padding is proportional (vw) so contents keep their breathing room from the
+   card edge at any screen size. */
+.metric_card,
+.clock_card {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  padding: 3vw;
+}
+
+.icon {
+  width: 9vw;
+  height: 9vw;
+  margin-bottom: 1.6vw;
+}
+
+/* Left column: two separate square cards stacked vertically, with a gap that
+   matches the gap between columns (2 x the .col padding).
+   Heights are computed explicitly with calc() rather than via flex
+   distribution: old Safari 9 flexbox mishandles `flex-basis: 50%` + margin and
+   lets the two squares overflow to 100% + gap, making the left column taller
+   than the others on the iPad mini. calc keeps square + gap + square == 100%
+   on every engine. Each square is 50% minus half the gap (28 / 2 = 14px). */
+.stack {
+  height: 100%;
+}
+
+.stack .card {
+  height: -webkit-calc(50% - 14px);
+  height: calc(50% - 14px);
+}
+
+.stack .clock_card {
+  margin-bottom: 28px;
+}
+
+/* Digital clock. Font size is proportional (vw) so it scales with the box and
+   never gets clipped on a different-sized screen. */
+.clock {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  font-size: 8vw;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* Metric labels and values (all proportional to the viewport / box). */
+.metric_label {
+  font-size: 2vw;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #8e8e93;
+  margin-bottom: 1vw;
+}
+
+.metric_value {
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.metric_value .value {
+  font-size: 6.5vw;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.metric_value.big .value {
+  font-size: 12.5vw;
+}
+
+.metric_value .unit {
+  font-size: 3.4vw;
+  font-weight: 600;
+  color: #8e8e93;
+  margin-left: 0.4vw;
+}
+
+.metric_value.big .unit {
+  font-size: 5vw;
+}
+
+/* Offline page */
+.offline_wrapper {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.offline_card {
+  background-color: #1c1c1e;
+  border-radius: 28px;
+  padding: 48px 60px;
+  text-align: center;
+  -webkit-box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+}
+
+.offline_title {
+  font-size: 3.2vw;
+  font-weight: 600;
+  color: #ff453a;
+  margin: 0 0 24px 0;
+}

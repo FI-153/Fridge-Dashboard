@@ -1,0 +1,18 @@
+services:
+  fridge_dashboard:
+    build: .
+    image: fridge-dashboard:latest
+    container_name: fridge_dashboard
+    restart: unless-stopped
+    ports:
+      - "${SERVER_PORT:-6123}:${SERVER_PORT:-6123}"
+    environment:
+      HASS_IP: ${HASS_IP:-}
+      HASS_PORT: ${HASS_PORT:-}
+      HASS_TOKEN: ${HASS_TOKEN:-}
+      ENTITY_TEMPERATURE: ${ENTITY_TEMPERATURE:-}
+      ENTITY_HUMIDITY: ${ENTITY_HUMIDITY:-}
+      ENTITY_POWER: ${ENTITY_POWER:-}
+      PAGE_REFRESH_INTERVAL_SECONDS: ${PAGE_REFRESH_INTERVAL_SECONDS:-60}
+      SERVER_PORT: ${SERVER_PORT:-6123}
+      TZ: ${TZ:-UTC}
