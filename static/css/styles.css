@@ -10,7 +10,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -71,8 +72,8 @@ td.col {
 }
 
 .icon {
-  width: 9vw;
-  height: 9vw;
+  width: 11vw;
+  height: 11vw;
   margin-bottom: 1.6vw;
 }
 
@@ -129,7 +130,7 @@ td.col {
 }
 
 .metric_value.big .value {
-  font-size: 12.5vw;
+  font-size: 10.0vw;
 }
 
 .metric_value .unit {
