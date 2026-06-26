@@ -1,7 +1,10 @@
+import logging
+
 import requests
 
 from config import Config
-from utils.logger import logger
+
+logger = logging.getLogger(__name__)
 
 # Home Assistant state strings that mean "no usable reading".
 _UNUSABLE_STATES = {None, "unavailable", "unknown"}
@@ -16,10 +19,7 @@ class HassClient:
           config (Config): The validated dashboard configuration.
         """
         self._base = f"http://{config.hass_ip}:{config.hass_port}/api/"
-        self._headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {config.hass_token}",
-        }
+        self._headers = {"Authorization": f"Bearer {config.hass_token}"}
 
     def _get(self, path: str):
         """

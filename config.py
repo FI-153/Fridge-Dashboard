@@ -68,7 +68,7 @@ def load_config() -> Config:
       ConfigError: If a required variable is missing or an optional numeric
           variable is not a positive integer.
     """
-    missing = _validate_config()
+    missing = [name for name in _REQUIRED if not os.environ.get(name)]
     if missing:
         raise ConfigError(f"Missing required environment variables: {', '.join(missing)}")
 
@@ -82,12 +82,3 @@ def load_config() -> Config:
         page_refresh_interval_seconds=_positive_int_env("PAGE_REFRESH_INTERVAL_SECONDS", 60),
         server_port=_positive_int_env("SERVER_PORT", 6123),
     )
-
-
-def _validate_config() -> list[str]:
-    """
-    Returns:
-        A list of missing configuration elements if any are presents, otherwise an
-        empty list
-    """
-    return [name for name in _REQUIRED if not os.environ.get(name)]

@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 
 from flask import Flask, render_template
@@ -5,6 +6,8 @@ from flask import Flask, render_template
 from config import load_config
 from dashboard.view import build_dashboard_model
 from homeassistant.client import HassClient
+
+logging.basicConfig(level=logging.INFO, format="[%(asctime)s] [%(levelname)s] %(message)s")
 
 app = Flask(__name__)
 CONFIG = load_config()
@@ -30,17 +33,6 @@ def home():
         "dashboard.html",
         **build_dashboard_model(_client, CONFIG, datetime.now()),
     )
-
-
-@app.route("/favicon.ico")
-def favicon():
-    """
-    Serves the favicon.
-
-    Returns:
-      Response: The favicon file.
-    """
-    return app.send_static_file("assets/favicon.ico")
 
 
 @app.route("/health")

@@ -50,8 +50,8 @@ and the ES5 clock).
 
 ### Key files
 
-- **`app.py`** — Flask entry point. Routes: `/` (dashboard or offline), `/favicon.ico`. The
-  module-level `_client` is the `HassClient`; tests patch it.
+- **`app.py`** — Flask entry point. Routes: `/` (dashboard or offline), `/health` (liveness).
+  The module-level `_client` is the `HassClient`; tests patch it.
 - **`config.py`** — `load_config() -> Config` reads/validates env vars. Raises `ConfigError`.
 - **`homeassistant/client.py`** — `HassClient`. `get_state(entity_id)` returns
   `{"result", "state", "unit"}` (reading HA's `unit_of_measurement`) or `{"result": "err"}`;
@@ -62,8 +62,7 @@ and the ES5 clock).
 - **`static/css/styles.css`** — dark theme; **flexbox only, no grid / custom properties**.
 - **`static/js/clock.js`** — ES5 only; ticks the `#clock` element each second.
 - **`static/assets/`** — `thermometer.svg`, `droplet.svg` (colors hardcoded in the SVG, since
-  `<img>`-loaded SVGs can't be recolored by host CSS), `favicon.ico`.
-- **`utils/logger.py`** — shared `logger`.
+  `<img>`-loaded SVGs can't be recolored by host CSS), `favicon.ico` (linked from `_head.html`).
 
 ### Design constraints
 

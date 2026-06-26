@@ -17,11 +17,7 @@
     var now = new Date();
     var text = pad_with_zero(now.getHours()) + ":" + pad_with_zero(now.getMinutes());
 
-    if (el.firstChild && el.firstChild.nodeType === 3) {
-      el.firstChild.nodeValue = text;
-    } else {
-      el.innerHTML = text;
-    }
+    el.textContent = text;
   }
 
   tick();

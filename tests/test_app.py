@@ -51,11 +51,6 @@ def test_dashboard_includes_refresh_meta(client):
     assert b'http-equiv="refresh"' in resp.data
 
 
-def test_favicon(client):
-    c, _ = client
-    assert c.get("/favicon.ico").status_code == 200
-
-
 def test_health_returns_200(client):
     c, _ = client
     resp = c.get("/health")
