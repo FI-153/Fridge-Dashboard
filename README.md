@@ -1,8 +1,8 @@
 # Fridge Dashboard
 
-A tiny Python/Flask web server that renders a single full-screen dashboard for an
-**iPad mini (1st generation)** mounted on a fridge. It reads three sensors from
-Home Assistant and shows them as dark, Apple-widget-style cards:
+A tiny Python/Flask web server that renders a single full-screen dashboard for an old tablet
+mounted on a fridge. It reads three sensors from Home Assistant and shows them as dark, 
+Apple-widget-style cards:
 
 - **Time** — a live digital clock (top-left)
 - **Power consumption** — current draw (bottom-left)
@@ -19,19 +19,25 @@ Home Assistant and shows them as dark, Apple-widget-style cards:
 +-------------+---------------+-------------+
 ```
 
-The HTML/CSS/JS are deliberately minimal so they render on Safari 9 (the iPad mini 1's
-maximum iOS). The whole page meta-refreshes every minute to pull fresh sensor values, and a
-~10-line ES5 script keeps the clock ticking between refreshes.
+The HTML/CSS/JS are deliberately minimal so they render on old browswers like Safari 9. 
+The whole page meta-refreshes every minute to pull fresh sensor values, and a ~10-line ES5
+script keeps the clock ticking between refreshes.
 
-## How the iPad connects
+## Install as a Home Assistant add-on
 
-Point the iPad's browser at the server over your LAN:
+This repo is a Home Assistant **add-on repository**. Add-ons are installed from the
+**Add-on Store**.
 
-```
-http://<server-host-or-ip>:<SERVER_PORT>/
-```
+[![Add repository to your Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FFI-153%2FFridge-Dashboard)
 
-`SERVER_PORT` defaults to `6123`.
+1. Click the badge above (or **Settings → Add-ons → Add-on Store → ⋮ → Repositories** and
+   paste `https://github.com/FI-153/Fridge-Dashboard`).
+2. "Fridge Dashboard" appears in the store. Open it and click **Install**.
+3. On the **Configuration** tab, set the three sensors (`entity_temperature`,
+   `entity_humidity`, `entity_power`) and optionally the refresh interval, then **Start**.
+4. On the tablet, open `http://<home-assistant-ip>:6123/`.
+
+Changing the sensors later is just editing those fields and restarting the add-on.
 
 ## Configuration
 
@@ -58,7 +64,7 @@ attribute, so nothing is hardcoded. If a sensor can't be read, its card shows `-
 Home Assistant is entirely unreachable, an offline page is shown and the dashboard recovers
 automatically on the next refresh.
 
-## Deployment (Docker — recommended)
+## Deploying as a standalone service (not as add-on)
 
 The image is configured entirely through **runtime environment variables** — there is no
 baked-in config and **no `.env` file is required**. Provide the variables whichever way suits
@@ -95,28 +101,6 @@ launch command lives in `entrypoint.sh`.
 The dashboard is then available at `http://<host>:<SERVER_PORT>/`.
 Stop it with `make docker-down`. A liveness probe is exposed at `/health`.
 
-## Install as a Home Assistant add-on
-
-This repo is also a Home Assistant **add-on** (`config.yaml`), so it can be installed and
-configured straight from the Home Assistant UI — including the **sensor entity IDs**.
-
-1. Copy this repo into your Home Assistant `/addons` folder, e.g. via the *Samba* or
-   *Advanced SSH & Web Terminal* add-on:
-   ```bash
-   git clone https://github.com/FI-153/Fridge-Dashboard /addons/fridge-dashboard
-   ```
-2. **Settings → Add-ons → Add-on Store → ⋮ → Check for updates**. "Fridge Dashboard" now
-   appears under **Local add-ons**. Open it and click **Install** (it builds on the device;
-   `aarch64`/`amd64`).
-3. On the **Configuration** tab, set the three sensors (`entity_temperature`,
-   `entity_humidity`, `entity_power`) and optionally the refresh interval — then **Start**.
-   The add-on reaches Home Assistant through the Supervisor API, so there is **no host, port,
-   or token to enter**.
-4. On the tablet, open `http://<home-assistant-ip>:6123/`.
-
-Changing the sensors later is just editing those fields and restarting the add-on — no files
-to touch. (Bump `version` in `config.yaml` when you pull new code so HA offers the update.)
-
 ## Local development
 
 Dependencies are managed with [uv](https://docs.astral.sh/uv/).
@@ -133,19 +117,4 @@ To run the dev server locally:
 ```bash
 make debug    # loads ./.env if present, then runs the Flask dev server in the terminal
 make run      # runs the Flask dev server (expects the variables already exported)
-```
-
-## Project layout
-
-```
-app.py                    Flask entry point + routes
-config.py                 Loads/validates env-var configuration
-homeassistant/client.py   Home Assistant REST client
-dashboard/view.py         Builds the template view model
-templates/                Jinja2 templates (dashboard, offline, shared head)
-static/css/styles.css     Dark Apple-widget styling (Safari-9 safe)
-static/js/clock.js        ES5 ticking clock
-static/assets/            SVG icons + favicon
-tests/                    pytest suite
-context/                  Design docs and conventions
 ```

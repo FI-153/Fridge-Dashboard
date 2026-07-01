@@ -1,6 +1,7 @@
-# Home Assistant add-on manifest. Lets the project be installed directly into
-# Home Assistant (Supervisor). The container is the same one built from the
-# Dockerfile; entrypoint.sh maps the options below to the app's env vars.
+# Home Assistant add-on manifest. Installed via the Add-on Store after adding this
+# repository. `image:` makes Supervisor PULL the prebuilt image (built by CI) tagged
+# with `version` below, instead of building on-device. entrypoint.sh maps the options
+# to the app's env vars and talks to Core through the Supervisor API.
 name: Fridge Dashboard
 version: "1.0.0"
 slug: fridge_dashboard
@@ -8,6 +9,7 @@ description: >-
   Full-screen dashboard (temperature, humidity, power) for a wall- or
   fridge-mounted tablet.
 url: https://github.com/FI-153/Fridge-Dashboard
+image: ghcr.io/fi-153/fridge-dashboard-{arch}
 # ponytail: aarch64 + amd64 only — the uv base image has no armv7/armhf build.
 arch:
   - aarch64

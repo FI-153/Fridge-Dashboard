@@ -10,3 +10,7 @@ tests/
 context/
 *.md
 .DS_Store
+# Add-on repository metadata — not needed inside the image
+.github/
+fridge_dashboard/
+repository.yaml
