@@ -29,7 +29,6 @@ _REQUIRED = [
     "HASS_TOKEN",
     "ENTITY_TEMPERATURE",
     "ENTITY_HUMIDITY",
-    "ENTITY_POWER",
 ]
 
 
@@ -86,7 +85,7 @@ def load_config() -> Config:
         hass_token=os.environ["HASS_TOKEN"],
         entity_temperature=os.environ["ENTITY_TEMPERATURE"],
         entity_humidity=os.environ["ENTITY_HUMIDITY"],
-        entity_power=os.environ["ENTITY_POWER"],
+        entity_power=os.environ.get("ENTITY_POWER", ""),
         page_refresh_interval_seconds=_positive_int_env("PAGE_REFRESH_INTERVAL_SECONDS", 60),
         server_port=_positive_int_env("SERVER_PORT", 6123),
         hass_url=hass_url,

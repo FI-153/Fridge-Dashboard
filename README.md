@@ -40,7 +40,7 @@ All configuration is via environment variables. Copy `.env.example` to `.env` an
 | `HASS_TOKEN`                    | yes      | —       | Long-lived access token                  |
 | `ENTITY_TEMPERATURE`            | yes      | —       | Temperature sensor entity ID             |
 | `ENTITY_HUMIDITY`               | yes      | —       | Humidity sensor entity ID                |
-| `ENTITY_POWER`                  | yes      | —       | Power-consumption sensor entity ID       |
+| `ENTITY_POWER`                  | no       | —       | Power sensor entity ID; empty → clock fills the left column |
 | `HASS_URL`                      | no       | —       | Full API base (`…/api/`); if set, replaces `HASS_IP`/`HASS_PORT` |
 | `THEME`                         | no       | `dark`  | Color theme: `dark` or `light`           |
 | `PAGE_REFRESH_INTERVAL_SECONDS` | no       | `60`    | Whole-page refresh interval (seconds)    |

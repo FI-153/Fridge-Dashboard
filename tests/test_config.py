@@ -110,4 +110,12 @@ def test_missing_required_raises_listing_all(monkeypatch):
         load_config()
     message = str(exc.value)
     assert "HASS_IP" in message
-    assert "ENTITY_POWER" in message
+    assert "ENTITY_TEMPERATURE" in message
+
+
+def test_power_entity_optional(monkeypatch):
+    for k, v in REQUIRED.items():
+        monkeypatch.setenv(k, v)
+    monkeypatch.delenv("ENTITY_POWER", raising=False)
+    cfg = load_config()
+    assert cfg.entity_power == ""

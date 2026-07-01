@@ -11,7 +11,7 @@ Add these sensors to be shown in the dashboard:
 | --- | --- |
 | `entity_temperature` | Temperature sensor entity ID (e.g. `sensor.fridge_temperature`) |
 | `entity_humidity` | Humidity sensor entity ID |
-| `entity_power` | Power-consumption sensor entity ID |
+| `entity_power` | Power-consumption sensor entity ID (optional — leave empty and the clock fills the left column) |
 | `page_refresh_interval_seconds` | Whole-page refresh interval (default 60, min 5) |
 | `theme` | Color theme: `dark` (default) or `light` |
 

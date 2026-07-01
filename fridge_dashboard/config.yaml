@@ -29,6 +29,6 @@ options:
 schema:
   entity_temperature: str
   entity_humidity: str
-  entity_power: str
+  entity_power: str?
   page_refresh_interval_seconds: int(5,)
   theme: list(dark|light)
