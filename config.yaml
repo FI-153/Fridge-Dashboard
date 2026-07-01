@@ -1,0 +1,30 @@
+# Home Assistant add-on manifest. Lets the project be installed directly into
+# Home Assistant (Supervisor). The container is the same one built from the
+# Dockerfile; entrypoint.sh maps the options below to the app's env vars.
+name: Fridge Dashboard
+version: "1.0.0"
+slug: fridge_dashboard
+description: >-
+  Full-screen dashboard (temperature, humidity, power) for a wall- or
+  fridge-mounted tablet.
+url: https://github.com/FI-153/Fridge-Dashboard
+# ponytail: aarch64 + amd64 only — the uv base image has no armv7/armhf build.
+arch:
+  - aarch64
+  - amd64
+init: false
+homeassistant_api: true
+ports:
+  "6123/tcp": 6123
+ports_description:
+  "6123/tcp": Dashboard — open http://<home-assistant-ip>:6123/ on the tablet
+options:
+  entity_temperature: ""
+  entity_humidity: ""
+  entity_power: ""
+  page_refresh_interval_seconds: 60
+schema:
+  entity_temperature: str
+  entity_humidity: str
+  entity_power: str
+  page_refresh_interval_seconds: int(5,)

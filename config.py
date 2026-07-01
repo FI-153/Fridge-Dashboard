@@ -18,11 +18,12 @@ class Config:
     entity_power: str
     page_refresh_interval_seconds: int
     server_port: int
+    # Full API base URL (".../api/"). When set (e.g. the Home Assistant add-on
+    # points it at the Supervisor proxy) it replaces hass_ip/hass_port.
+    hass_url: str = ""
 
 
 _REQUIRED = [
-    "HASS_IP",
-    "HASS_PORT",
     "HASS_TOKEN",
     "ENTITY_TEMPERATURE",
     "ENTITY_HUMIDITY",
@@ -68,17 +69,22 @@ def load_config() -> Config:
       ConfigError: If a required variable is missing or an optional numeric
           variable is not a positive integer.
     """
-    missing = [name for name in _REQUIRED if not os.environ.get(name)]
+    hass_url = os.environ.get("HASS_URL", "")
+    # Without an explicit API URL, it is built from host + port, so require those.
+    required = _REQUIRED if hass_url else ["HASS_IP", "HASS_PORT", *_REQUIRED]
+
+    missing = [name for name in required if not os.environ.get(name)]
     if missing:
         raise ConfigError(f"Missing required environment variables: {', '.join(missing)}")
 
     return Config(
-        hass_ip=os.environ["HASS_IP"],
-        hass_port=os.environ["HASS_PORT"],
+        hass_ip=os.environ.get("HASS_IP", ""),
+        hass_port=os.environ.get("HASS_PORT", ""),
         hass_token=os.environ["HASS_TOKEN"],
         entity_temperature=os.environ["ENTITY_TEMPERATURE"],
         entity_humidity=os.environ["ENTITY_HUMIDITY"],
         entity_power=os.environ["ENTITY_POWER"],
         page_refresh_interval_seconds=_positive_int_env("PAGE_REFRESH_INTERVAL_SECONDS", 60),
         server_port=_positive_int_env("SERVER_PORT", 6123),
+        hass_url=hass_url,
     )

@@ -39,14 +39,19 @@ All configuration is via environment variables. Copy `.env.example` to `.env` an
 
 | Variable                        | Required | Default | Purpose                                  |
 | ------------------------------- | -------- | ------- | ---------------------------------------- |
-| `HASS_IP`                       | yes      | —       | Home Assistant host/IP                   |
-| `HASS_PORT`                     | yes      | —       | Home Assistant port                      |
+| `HASS_IP`                       | yes\*    | —       | Home Assistant host/IP                   |
+| `HASS_PORT`                     | yes\*    | —       | Home Assistant port                      |
 | `HASS_TOKEN`                    | yes      | —       | Long-lived access token                  |
 | `ENTITY_TEMPERATURE`            | yes      | —       | Temperature sensor entity ID             |
 | `ENTITY_HUMIDITY`               | yes      | —       | Humidity sensor entity ID                |
 | `ENTITY_POWER`                  | yes      | —       | Power-consumption sensor entity ID       |
+| `HASS_URL`                      | no       | —       | Full API base (`…/api/`); if set, replaces `HASS_IP`/`HASS_PORT` |
 | `PAGE_REFRESH_INTERVAL_SECONDS` | no       | `60`    | Whole-page refresh interval (seconds)    |
 | `SERVER_PORT`                   | no       | `6123`  | Port the dashboard is served on          |
+
+\* `HASS_IP`/`HASS_PORT` are only needed when `HASS_URL` is not set. As a Home Assistant
+add-on the app talks to Core through the Supervisor proxy, so none of the connection
+variables are configured by hand — only the sensors (see below).
 
 Units (°C, %, W, …) are read from each entity's Home Assistant `unit_of_measurement`
 attribute, so nothing is hardcoded. If a sensor can't be read, its card shows `--`; if
@@ -89,6 +94,28 @@ launch command lives in `entrypoint.sh`.
 
 The dashboard is then available at `http://<host>:<SERVER_PORT>/`.
 Stop it with `make docker-down`. A liveness probe is exposed at `/health`.
+
+## Install as a Home Assistant add-on
+
+This repo is also a Home Assistant **add-on** (`config.yaml`), so it can be installed and
+configured straight from the Home Assistant UI — including the **sensor entity IDs**.
+
+1. Copy this repo into your Home Assistant `/addons` folder, e.g. via the *Samba* or
+   *Advanced SSH & Web Terminal* add-on:
+   ```bash
+   git clone https://github.com/FI-153/Fridge-Dashboard /addons/fridge-dashboard
+   ```
+2. **Settings → Add-ons → Add-on Store → ⋮ → Check for updates**. "Fridge Dashboard" now
+   appears under **Local add-ons**. Open it and click **Install** (it builds on the device;
+   `aarch64`/`amd64`).
+3. On the **Configuration** tab, set the three sensors (`entity_temperature`,
+   `entity_humidity`, `entity_power`) and optionally the refresh interval — then **Start**.
+   The add-on reaches Home Assistant through the Supervisor API, so there is **no host, port,
+   or token to enter**.
+4. On the tablet, open `http://<home-assistant-ip>:6123/`.
+
+Changing the sensors later is just editing those fields and restarting the add-on — no files
+to touch. (Bump `version` in `config.yaml` when you pull new code so HA offers the update.)
 
 ## Local development
 

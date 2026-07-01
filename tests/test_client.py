@@ -99,6 +99,16 @@ def test_get_state_url_and_auth(mock_get):
 
 
 @patch("homeassistant.client.requests.get")
+def test_get_state_uses_hass_url_base(mock_get):
+    resp = MagicMock(status_code=200)
+    resp.json.return_value = {"state": "1", "attributes": {}}
+    mock_get.return_value = resp
+    cfg = Config("", "", "tok", "sensor.t", "sensor.h", "sensor.p", 60, 6123, "http://supervisor/core/api/")
+    HassClient(cfg).get_state("sensor.x")
+    assert mock_get.call_args[0][0] == "http://supervisor/core/api/states/sensor.x"
+
+
+@patch("homeassistant.client.requests.get")
 def test_is_reachable_true(mock_get):
     mock_get.return_value = MagicMock(status_code=200)
     assert _client().is_reachable() is True

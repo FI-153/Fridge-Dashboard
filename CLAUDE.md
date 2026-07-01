@@ -41,6 +41,13 @@ All configuration comes from **environment variables** (no `constants.py`). See
 validates these at startup and fails fast listing any that are missing. The real `.env` is
 gitignored.
 
+As a **Home Assistant add-on** (`config.yaml`), only the sensor entity IDs (+ refresh) are
+set in HA's Configuration UI; HA writes them to `/data/options.json` and `entrypoint.sh`
+maps each key to its upper-cased env var (e.g. `entity_temperature` → `ENTITY_TEMPERATURE`).
+With `homeassistant_api: true`, `entrypoint.sh` also points `HASS_URL` at the Supervisor
+proxy (`http://supervisor/core/api/`) using the injected `SUPERVISOR_TOKEN`, so no host,
+port, or token is configured. Bump `config.yaml`'s `version` when shipping new code.
+
 ## Architecture
 
 **Request flow:** iPad → Flask (`app.py`) `GET /` → `HassClient.is_reachable()`. If
