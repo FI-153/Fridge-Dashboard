@@ -3,8 +3,11 @@
 A tiny Python/Flask web server that renders a single full-screen dashboard for an old tablet
 mounted on a fridge.
 
-<img width="500" alt="main_dark" src="https://github.com/user-attachments/assets/b1d2e44f-f590-4207-99c5-239f3ced3873" />
-<img width="500" alt="dashbpard_main" src="https://github.com/user-attachments/assets/64d034cc-8147-4665-b791-0d130498b9e2" />
+<p align="center">
+  <img width="480" alt="main_dark" src="https://github.com/user-attachments/assets/b1d2e44f-f590-4207-99c5-239f3ced3873" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img width="480" alt="dashbpard_main" src="https://github.com/user-attachments/assets/64d034cc-8147-4665-b791-0d130498b9e2" />
+</p>
 
 The HTML/CSS/JS are deliberately minimal so they render on old browswers like Safari 9. 
 The whole page meta-refreshes every minute to pull fresh sensor values, and a ~10-line ES5
@@ -39,6 +42,7 @@ All configuration is via environment variables. Copy `.env.example` to `.env` an
 | `ENTITY_HUMIDITY`               | yes      | —       | Humidity sensor entity ID                |
 | `ENTITY_POWER`                  | yes      | —       | Power-consumption sensor entity ID       |
 | `HASS_URL`                      | no       | —       | Full API base (`…/api/`); if set, replaces `HASS_IP`/`HASS_PORT` |
+| `THEME`                         | no       | `dark`  | Color theme: `dark` or `light`           |
 | `PAGE_REFRESH_INTERVAL_SECONDS` | no       | `60`    | Whole-page refresh interval (seconds)    |
 | `SERVER_PORT`                   | no       | `6123`  | Port the dashboard is served on          |
 

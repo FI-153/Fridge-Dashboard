@@ -37,6 +37,7 @@ def build_dashboard_model(client: HassClient, config: Config, now: datetime) -> 
     return {
         "time": now.strftime("%H:%M"),
         "refresh": config.page_refresh_interval_seconds,
+        "theme": config.theme,
         "temperature": _reading(client, config.entity_temperature),
         "humidity": _reading(client, config.entity_humidity),
         "power": _reading(client, config.entity_power),

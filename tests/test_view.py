@@ -17,6 +17,7 @@ def test_model_maps_readings_and_units():
     model = build_dashboard_model(client, CFG, datetime(2026, 1, 1, 12, 45))
     assert model["time"] == "12:45"
     assert model["refresh"] == 30
+    assert model["theme"] == "dark"
     assert model["temperature"] == {"value": "4.2", "unit": "°C", "ok": True}
     assert model["humidity"] == {"value": "58", "unit": "%", "ok": True}
     assert model["power"] == {"value": "120", "unit": "W", "ok": True}

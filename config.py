@@ -21,6 +21,8 @@ class Config:
     # Full API base URL (".../api/"). When set (e.g. the Home Assistant add-on
     # points it at the Supervisor proxy) it replaces hass_ip/hass_port.
     hass_url: str = ""
+    # Color theme: "dark" (default) or "light".
+    theme: str = "dark"
 
 
 _REQUIRED = [
@@ -70,6 +72,7 @@ def load_config() -> Config:
           variable is not a positive integer.
     """
     hass_url = os.environ.get("HASS_URL", "")
+    theme = "light" if os.environ.get("THEME", "dark").strip().lower() == "light" else "dark"
     # Without an explicit API URL, it is built from host + port, so require those.
     required = _REQUIRED if hass_url else ["HASS_IP", "HASS_PORT", *_REQUIRED]
 
@@ -87,4 +90,5 @@ def load_config() -> Config:
         page_refresh_interval_seconds=_positive_int_env("PAGE_REFRESH_INTERVAL_SECONDS", 60),
         server_port=_positive_int_env("SERVER_PORT", 6123),
         hass_url=hass_url,
+        theme=theme,
     )

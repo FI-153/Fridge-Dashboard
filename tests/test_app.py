@@ -29,6 +29,7 @@ def test_dashboard_when_reachable(client):
         resp = c.get("/")
     assert resp.status_code == 200
     assert b"4.2" in resp.data
+    assert b'class="dark"' in resp.data
 
 
 def test_offline_when_unreachable(client):

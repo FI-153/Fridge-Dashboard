@@ -13,6 +13,7 @@ Add these sensors to be shown in the dashboard:
 | `entity_humidity` | Humidity sensor entity ID |
 | `entity_power` | Power-consumption sensor entity ID |
 | `page_refresh_interval_seconds` | Whole-page refresh interval (default 60, min 5) |
+| `theme` | Color theme: `dark` (default) or `light` |
 
 Units (°C, %, W etc) come from each entity's `unit_of_measurement`. A sensor that can't be
 read shows `--`; if Home Assistant is unreachable an offline page is shown and recovers
