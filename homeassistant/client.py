@@ -18,7 +18,7 @@ class HassClient:
         Args:
           config (Config): The validated dashboard configuration.
         """
-        self._base = f"http://{config.hass_ip}:{config.hass_port}/api/"
+        self._base = config.hass_url or f"http://{config.hass_ip}:{config.hass_port}/api/"
         self._headers = {"Authorization": f"Bearer {config.hass_token}"}
 
     def _get(self, path: str):

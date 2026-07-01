@@ -41,6 +41,16 @@ All configuration comes from **environment variables** (no `constants.py`). See
 validates these at startup and fails fast listing any that are missing. The real `.env` is
 gitignored.
 
+This repo is also a **Home Assistant add-on repository**: `repository.yaml` at the root and
+the add-on manifest at `fridge_dashboard/config.yaml`. Only the sensor entity IDs (+ refresh)
+are set in HA's Configuration UI; HA writes them to `/data/options.json` and `entrypoint.sh`
+maps each key to its upper-cased env var (e.g. `entity_temperature` → `ENTITY_TEMPERATURE`).
+With `homeassistant_api: true`, `entrypoint.sh` also points `HASS_URL` at the Supervisor
+proxy (`http://supervisor/core/api/`) using the injected `SUPERVISOR_TOKEN`, so no host,
+port, or token is configured. The manifest's `image:` is a prebuilt GHCR image built by
+`.github/workflows/build-image.yaml` (buildx, `aarch64`/`amd64`) on push to `main`; bump
+`fridge_dashboard/config.yaml`'s `version` to ship an update.
+
 ## Architecture
 
 **Request flow:** iPad → Flask (`app.py`) `GET /` → `HassClient.is_reachable()`. If

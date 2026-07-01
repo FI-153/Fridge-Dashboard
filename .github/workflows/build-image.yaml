@@ -1,0 +1,91 @@
+name: Build add-on images
+
+# Build and push the prebuilt add-on images that fridge_dashboard/config.yaml
+# references (ghcr.io/<owner>/fridge-dashboard-{arch}). Tagged with the manifest
+# version, so bump `version` in config.yaml to ship an update.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app.py"
+      - "config.py"
+      - "homeassistant/**"
+      - "dashboard/**"
+      - "templates/**"
+      - "static/**"
+      - "entrypoint.sh"
+      - "Dockerfile"
+      - "pyproject.toml"
+      - "uv.lock"
+      - "fridge_dashboard/config.yaml"
+      - ".github/workflows/build-image.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - arch: aarch64
+            platform: linux/arm64
+          - arch: amd64
+            platform: linux/amd64
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve image name and version
+        id: meta
+        run: |
+          owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          version=$(grep -m1 '^version:' fridge_dashboard/config.yaml | sed -E 's/.*"(.*)".*/\1/')
+          echo "image=ghcr.io/${owner}/fridge-dashboard-${{ matrix.arch }}" >> "$GITHUB_OUTPUT"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: ${{ matrix.platform }}
+          push: true
+          build-args: |
+            BUILD_VERSION=${{ steps.meta.outputs.version }}
+            BUILD_ARCH=${{ matrix.arch }}
+          tags: |
+            ${{ steps.meta.outputs.image }}:${{ steps.meta.outputs.version }}
+            ${{ steps.meta.outputs.image }}:latest
+
+  # Cut a GitHub Release only when the manifest version is new (tag v<version>
+  # doesn't exist yet) — i.e. on a version bump. Notes come from the matching
+  # section of the add-on CHANGELOG.
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Release on version bump
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version=$(grep -m1 '^version:' fridge_dashboard/config.yaml | sed -E 's/.*"(.*)".*/\1/')
+          tag="v${version}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists — no version bump, skipping."
+            exit 0
+          fi
+          notes=$(awk -v v="$version" '$0 ~ "^## " v "( |$)" {f=1; next} /^## / {f=0} f' fridge_dashboard/CHANGELOG.md)
+          [ -z "$notes" ] && notes="Fridge Dashboard $tag"
+          gh release create "$tag" --target "$GITHUB_SHA" --title "$tag" --notes "$notes"

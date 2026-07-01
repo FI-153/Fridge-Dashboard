@@ -70,6 +70,18 @@ def test_blank_optional_falls_back_to_default(monkeypatch):
     assert cfg.server_port == 6123
 
 
+def test_hass_url_replaces_ip_port(monkeypatch):
+    monkeypatch.delenv("HASS_IP", raising=False)
+    monkeypatch.delenv("HASS_PORT", raising=False)
+    monkeypatch.setenv("HASS_TOKEN", "tok")
+    monkeypatch.setenv("HASS_URL", "http://supervisor/core/api/")
+    monkeypatch.setenv("ENTITY_TEMPERATURE", "sensor.t")
+    monkeypatch.setenv("ENTITY_HUMIDITY", "sensor.h")
+    monkeypatch.setenv("ENTITY_POWER", "sensor.p")
+    cfg = load_config()
+    assert cfg.hass_url == "http://supervisor/core/api/"
+
+
 def test_missing_required_raises_listing_all(monkeypatch):
     for k in REQUIRED:
         monkeypatch.delenv(k, raising=False)
