@@ -27,7 +27,8 @@ This repo is a Home Assistant **add-on repository**. Add-ons are installed from 
    `entity_humidity`, `entity_power`) and optionally the refresh interval, then **Start**.
 4. On the tablet, open `http://<home-assistant-ip>:6123/`.
 
-Changing the sensors later is just editing those fields and restarting the add-on.
+Changing the sensors later is just editing those fields and restarting the add-on. If port
+6123 is already in use, remap it under the add-on's **Network** panel to any free host port.
 
 ## Configuration
 

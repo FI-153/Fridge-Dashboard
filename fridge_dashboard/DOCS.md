@@ -23,3 +23,9 @@ automatically once Home Assistnat is reachable again.
 
 1. Set the three sensors on the **Configuration** tab and **Start** the add-on.
 2. On the tablet, open `http://<home-assistant-ip>:6123/`.
+
+## Port
+
+The dashboard is served on host port **6123** by default. If that port is already in use,
+open the add-on's **Network** panel and set any free host port, then browse to
+`http://<home-assistant-ip>:<that-port>/`.
