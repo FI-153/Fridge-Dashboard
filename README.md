@@ -1,23 +1,10 @@
 # Fridge Dashboard
 
 A tiny Python/Flask web server that renders a single full-screen dashboard for an old tablet
-mounted on a fridge. It reads three sensors from Home Assistant and shows them as dark, 
-Apple-widget-style cards:
+mounted on a fridge.
 
-- **Time** — a live digital clock (top-left)
-- **Power consumption** — current draw (bottom-left)
-- **Temperature** — centre, with a thermometer icon
-- **Humidity** — right, with a water-drop icon
-
-```
-+-------------+---------------+-------------+
-|   21:28     |               |             |
-|.............|   [thermo]    |   [drop]    |
-|             |     4.2°C     |    58%      |
-|   POWER     |               |             |
-|   120 W     |               |             |
-+-------------+---------------+-------------+
-```
+<img width="500" alt="main_dark" src="https://github.com/user-attachments/assets/b1d2e44f-f590-4207-99c5-239f3ced3873" />
+<img width="500" alt="dashbpard_main" src="https://github.com/user-attachments/assets/64d034cc-8147-4665-b791-0d130498b9e2" />
 
 The HTML/CSS/JS are deliberately minimal so they render on old browswers like Safari 9. 
 The whole page meta-refreshes every minute to pull fresh sensor values, and a ~10-line ES5
