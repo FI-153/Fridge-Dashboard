@@ -22,7 +22,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   packages: write
 
 jobs:
@@ -66,3 +66,26 @@ jobs:
           tags: |
             ${{ steps.meta.outputs.image }}:${{ steps.meta.outputs.version }}
             ${{ steps.meta.outputs.image }}:latest
+
+  # Cut a GitHub Release only when the manifest version is new (tag v<version>
+  # doesn't exist yet) — i.e. on a version bump. Notes come from the matching
+  # section of the add-on CHANGELOG.
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Release on version bump
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version=$(grep -m1 '^version:' fridge_dashboard/config.yaml | sed -E 's/.*"(.*)".*/\1/')
+          tag="v${version}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists — no version bump, skipping."
+            exit 0
+          fi
+          notes=$(awk -v v="$version" '$0 ~ "^## " v "( |$)" {f=1; next} /^## / {f=0} f' fridge_dashboard/CHANGELOG.md)
+          [ -z "$notes" ] && notes="Fridge Dashboard $tag"
+          gh release create "$tag" --target "$GITHUB_SHA" --title "$tag" --notes "$notes"
