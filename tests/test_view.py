@@ -17,6 +17,7 @@ def test_model_maps_readings_and_units():
     model = build_dashboard_model(client, CFG, datetime(2026, 1, 1, 12, 45))
     assert model["time"] == "12:45"
     assert model["refresh"] == 30
+    assert model["theme"] == "dark"
     assert model["temperature"] == {"value": "4.2", "unit": "°C", "ok": True}
     assert model["humidity"] == {"value": "58", "unit": "%", "ok": True}
     assert model["power"] == {"value": "120", "unit": "W", "ok": True}
@@ -35,3 +36,11 @@ def test_model_handles_missing_unit():
     client.get_state.return_value = {"result": "OK", "state": "7", "unit": None}
     model = build_dashboard_model(client, CFG, datetime(2026, 1, 1, 0, 0))
     assert model["temperature"] == {"value": "7", "unit": "", "ok": True}
+
+
+def test_model_power_none_when_not_configured():
+    client = MagicMock()
+    client.get_state.return_value = {"result": "OK", "state": "1", "unit": "W"}
+    cfg = Config("ip", "8123", "tok", "sensor.t", "sensor.h", "", 30, 6123)
+    model = build_dashboard_model(client, cfg, datetime(2026, 1, 1, 0, 0))
+    assert model["power"] is None

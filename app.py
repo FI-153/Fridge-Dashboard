@@ -27,6 +27,7 @@ def home():
             "offline.html",
             refresh=CONFIG.page_refresh_interval_seconds,
             time=datetime.now().strftime("%H:%M"),
+            theme=CONFIG.theme,
         )
 
     return render_template(

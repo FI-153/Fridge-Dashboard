@@ -82,6 +82,27 @@ def test_hass_url_replaces_ip_port(monkeypatch):
     assert cfg.hass_url == "http://supervisor/core/api/"
 
 
+def test_theme_defaults_dark(monkeypatch):
+    for k, v in REQUIRED.items():
+        monkeypatch.setenv(k, v)
+    monkeypatch.delenv("THEME", raising=False)
+    assert load_config().theme == "dark"
+
+
+def test_theme_light(monkeypatch):
+    for k, v in REQUIRED.items():
+        monkeypatch.setenv(k, v)
+    monkeypatch.setenv("THEME", "Light")
+    assert load_config().theme == "light"
+
+
+def test_theme_invalid_coerces_dark(monkeypatch):
+    for k, v in REQUIRED.items():
+        monkeypatch.setenv(k, v)
+    monkeypatch.setenv("THEME", "banana")
+    assert load_config().theme == "dark"
+
+
 def test_missing_required_raises_listing_all(monkeypatch):
     for k in REQUIRED:
         monkeypatch.delenv(k, raising=False)
@@ -89,4 +110,12 @@ def test_missing_required_raises_listing_all(monkeypatch):
         load_config()
     message = str(exc.value)
     assert "HASS_IP" in message
-    assert "ENTITY_POWER" in message
+    assert "ENTITY_TEMPERATURE" in message
+
+
+def test_power_entity_optional(monkeypatch):
+    for k, v in REQUIRED.items():
+        monkeypatch.setenv(k, v)
+    monkeypatch.delenv("ENTITY_POWER", raising=False)
+    cfg = load_config()
+    assert cfg.entity_power == ""

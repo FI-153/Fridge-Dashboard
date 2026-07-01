@@ -1,23 +1,13 @@
 # Fridge Dashboard
 
 A tiny Python/Flask web server that renders a single full-screen dashboard for an old tablet
-mounted on a fridge. It reads three sensors from Home Assistant and shows them as dark, 
-Apple-widget-style cards:
+mounted on a fridge.
 
-- **Time** — a live digital clock (top-left)
-- **Power consumption** — current draw (bottom-left)
-- **Temperature** — centre, with a thermometer icon
-- **Humidity** — right, with a water-drop icon
-
-```
-+-------------+---------------+-------------+
-|   21:28     |               |             |
-|.............|   [thermo]    |   [drop]    |
-|             |     4.2°C     |    58%      |
-|   POWER     |               |             |
-|   120 W     |               |             |
-+-------------+---------------+-------------+
-```
+<p align="center">
+  <img width="480" alt="main_dark" src="https://github.com/user-attachments/assets/b1d2e44f-f590-4207-99c5-239f3ced3873" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img width="480" alt="dashbpard_main" src="https://github.com/user-attachments/assets/64d034cc-8147-4665-b791-0d130498b9e2" />
+</p>
 
 The HTML/CSS/JS are deliberately minimal so they render on old browswers like Safari 9. 
 The whole page meta-refreshes every minute to pull fresh sensor values, and a ~10-line ES5
@@ -37,7 +27,8 @@ This repo is a Home Assistant **add-on repository**. Add-ons are installed from 
    `entity_humidity`, `entity_power`) and optionally the refresh interval, then **Start**.
 4. On the tablet, open `http://<home-assistant-ip>:6123/`.
 
-Changing the sensors later is just editing those fields and restarting the add-on.
+Changing the sensors later is just editing those fields and restarting the add-on. If port
+6123 is already in use, remap it under the add-on's **Network** panel to any free host port.
 
 ## Configuration
 
@@ -50,8 +41,9 @@ All configuration is via environment variables. Copy `.env.example` to `.env` an
 | `HASS_TOKEN`                    | yes      | —       | Long-lived access token                  |
 | `ENTITY_TEMPERATURE`            | yes      | —       | Temperature sensor entity ID             |
 | `ENTITY_HUMIDITY`               | yes      | —       | Humidity sensor entity ID                |
-| `ENTITY_POWER`                  | yes      | —       | Power-consumption sensor entity ID       |
+| `ENTITY_POWER`                  | no       | —       | Power sensor entity ID; empty → clock fills the left column |
 | `HASS_URL`                      | no       | —       | Full API base (`…/api/`); if set, replaces `HASS_IP`/`HASS_PORT` |
+| `THEME`                         | no       | `dark`  | Color theme: `dark` or `light`           |
 | `PAGE_REFRESH_INTERVAL_SECONDS` | no       | `60`    | Whole-page refresh interval (seconds)    |
 | `SERVER_PORT`                   | no       | `6123`  | Port the dashboard is served on          |
 

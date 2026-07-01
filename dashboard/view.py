@@ -32,12 +32,15 @@ def build_dashboard_model(client: HassClient, config: Config, now: datetime) -> 
       now (datetime): The current time used for the server-rendered clock.
 
     Returns:
-      dict: View model with time, refresh interval, and three readings.
+      dict: View model with time, refresh interval, and readings. "power" is
+          None when no power entity is configured (the clock then fills the
+          left column).
     """
     return {
         "time": now.strftime("%H:%M"),
         "refresh": config.page_refresh_interval_seconds,
+        "theme": config.theme,
         "temperature": _reading(client, config.entity_temperature),
         "humidity": _reading(client, config.entity_humidity),
-        "power": _reading(client, config.entity_power),
+        "power": _reading(client, config.entity_power) if config.entity_power else None,
     }

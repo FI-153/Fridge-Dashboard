@@ -175,3 +175,29 @@ td.col {
   color: #ff453a;
   margin: 0 0 24px 0;
 }
+
+/*
+ * Light theme (Apple Home light-widget palette). Enabled by <body class="light">
+ * — only the colors change; layout is shared. No CSS custom properties so it
+ * stays Safari-9 safe. The dark palette above is the default (class "dark").
+ */
+.light {
+  background-color: #f2f2f7;
+  color: #1c1c1e;
+}
+
+.light .card,
+.light .offline_card {
+  background-color: #ffffff;
+  -webkit-box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10);
+}
+
+.light .clock,
+.light .metric_value .value {
+  color: #1c1c1e;
+}
+
+.light .offline_title {
+  color: #ff3b30;
+}

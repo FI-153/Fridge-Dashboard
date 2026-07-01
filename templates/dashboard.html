@@ -5,10 +5,11 @@
   {% include "_head.html" %}
 </head>
 
-<body>
+<body class="{{ theme }}">
   <table class="dashboard">
     <tr>
       <td class="col col_left">
+        {% if power %}
         <div class="stack">
           <div class="card clock_card">
             <div class="clock" id="clock">{{ time }}</div>
@@ -20,6 +21,11 @@
             </div>
           </div>
         </div>
+        {% else %}
+        <div class="card clock_card">
+          <div class="clock" id="clock">{{ time }}</div>
+        </div>
+        {% endif %}
       </td>
       <td class="col col_center">
         <div class="card metric_card">
