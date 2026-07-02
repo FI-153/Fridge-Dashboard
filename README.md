@@ -1,4 +1,4 @@
-# <img src='Assets/icon.png' width='65' align='center' alt='icon'> Fridge Dashboard
+# <img src='assets/icon.png' width='65' align='center' alt='icon'> Fridge Dashboard
 
 A tiny Python/Flask web server that renders a single full-screen dashboard for an old tablet
 mounted on a fridge.
