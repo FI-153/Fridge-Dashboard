@@ -1,5 +1,7 @@
 # <img src='assets/icon.png' width='65' align='center' alt='icon'> Fridge Dashboard
 
+![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield]
+
 A tiny Python/Flask web server that renders a single full-screen dashboard for an old tablet
 mounted on a fridge.
 
