@@ -115,3 +115,10 @@ To run the dev server locally:
 make debug    # loads ./.env if present, then runs the Flask dev server in the terminal
 make run      # runs the Flask dev server (expects the variables already exported)
 ```
+
+## Built with AI
+
+This software was developed with strong assistance from Claude (Opus and other Anthropic
+models), with humans leading the ideas, testing, and debugging. I say this openly because
+it shaped how the project was built. If you are not happy with AI-developed code, this 
+software is not for you.
