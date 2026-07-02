@@ -1,13 +1,18 @@
-# Fridge Dashboard
+# <img src='assets/icon.png' width='65' align='center' alt='icon'> Fridge Dashboard
+
+![Supports aarch64 Architecture](https://img.shields.io/badge/aarch64-yes-green.svg) ![Supports amd64 Architecture](https://img.shields.io/badge/amd64-yes-green.svg)
 
 A tiny Python/Flask web server that renders a single full-screen dashboard for an old tablet
 mounted on a fridge.
 
-<p align="center">
-  <img width="480" alt="main_dark" src="https://github.com/user-attachments/assets/b1d2e44f-f590-4207-99c5-239f3ced3873" />
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img width="480" alt="dashbpard_main" src="https://github.com/user-attachments/assets/64d034cc-8147-4665-b791-0d130498b9e2" />
-</p>
+<div align="center">
+  <table>
+    <tr>
+      <td><img width="400" alt="main_dark" src="https://github.com/user-attachments/assets/b1d2e44f-f590-4207-99c5-239f3ced3873" /></td>
+      <td><img width="400" alt="dashbpard_main" src="https://github.com/user-attachments/assets/64d034cc-8147-4665-b791-0d130498b9e2" /></td>
+    </tr>
+  </table>
+</div>
 
 The HTML/CSS/JS are deliberately minimal so they render on old browswers like Safari 9. 
 The whole page meta-refreshes every minute to pull fresh sensor values, and a ~10-line ES5
@@ -110,3 +115,10 @@ To run the dev server locally:
 make debug    # loads ./.env if present, then runs the Flask dev server in the terminal
 make run      # runs the Flask dev server (expects the variables already exported)
 ```
+
+## Built with AI
+
+This software was developed with strong assistance from Claude (Opus and other Anthropic
+models), with humans leading the ideas, testing, and debugging. I say this openly because
+it shaped how the project was built. If you are not happy with AI-developed code, this 
+software is not for you.
