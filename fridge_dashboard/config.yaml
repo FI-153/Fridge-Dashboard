@@ -8,6 +8,7 @@ slug: fridge_dashboard
 description: >-
   Full-screen dashboard (temperature, humidity, power) for a wall- or
   fridge-mounted tablet.
+  ![Supports aarch64 Architecture](https://img.shields.io/badge/aarch64-yes-green.svg) ![Supports amd64 Architecture](https://img.shields.io/badge/amd64-yes-green.svg)
 url: https://github.com/FI-153/Fridge-Dashboard
 image: ghcr.io/fi-153/fridge-dashboard-{arch}
 # ponytail: aarch64 + amd64 only — the uv base image has no armv7/armhf build.
