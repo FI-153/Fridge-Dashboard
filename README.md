@@ -1,12 +1,12 @@
-# Fridge Dashboard
+# <img src='Assets/icon.png' width='65' align='center' alt='icon'> Fridge Dashboard
 
 A tiny Python/Flask web server that renders a single full-screen dashboard for an old tablet
 mounted on a fridge.
 
 <p align="center">
-  <img width="480" alt="main_dark" src="https://github.com/user-attachments/assets/b1d2e44f-f590-4207-99c5-239f3ced3873" />
+  <img width="460" alt="main_dark" src="https://github.com/user-attachments/assets/b1d2e44f-f590-4207-99c5-239f3ced3873" />
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <img width="480" alt="dashbpard_main" src="https://github.com/user-attachments/assets/64d034cc-8147-4665-b791-0d130498b9e2" />
+  <img width="460" alt="dashbpard_main" src="https://github.com/user-attachments/assets/64d034cc-8147-4665-b791-0d130498b9e2" />
 </p>
 
 The HTML/CSS/JS are deliberately minimal so they render on old browswers like Safari 9. 
