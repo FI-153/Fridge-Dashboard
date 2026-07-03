@@ -8,8 +8,10 @@ mounted on a fridge.
 <div align="center">
   <table>
     <tr>
-      <td><img width="400" alt="main_dark" src="https://github.com/user-attachments/assets/b1d2e44f-f590-4207-99c5-239f3ced3873" /></td>
-      <td><img width="400" alt="dashbpard_main" src="https://github.com/user-attachments/assets/64d034cc-8147-4665-b791-0d130498b9e2" /></td>
+      <td><img width="400" alt="main_dark" src="https://github.com/user-attachments/assets/0064e607-e775-447d-971b-5829da79bc3f" />
+</td>
+      <td><img width="400" alt="dashbpard_main" src="https://github.com/user-attachments/assets/092a8c60-a351-40b8-8e70-e61afca6af28" />
+</td>
     </tr>
   </table>
 </div>
