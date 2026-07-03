@@ -12,7 +12,7 @@ Add these sensors to be shown in the dashboard:
 | `entity_temperature` | Temperature sensor entity ID (e.g. `sensor.fridge_temperature`) |
 | `entity_humidity` | Humidity sensor entity ID |
 | `entity_power` | Power-consumption sensor entity ID (optional — leave empty and the clock fills the left column) |
-| `entity_temperature_derivative` | Optional derivative (rate-of-change) sensor for temperature. Set it to show a trend arrow below the number (↗ rising, ↘ falling, ← stable); leave empty for no arrow |
+| `entity_temperature_derivative` | Optional derivative (rate-of-change) sensor for temperature. Set it to show a trend arrow below the number (↗ rising, ↘ falling, → stable); leave empty for no arrow |
 | `entity_humidity_derivative` | Optional derivative sensor for humidity — same trend arrow behaviour |
 | `page_refresh_interval_seconds` | Whole-page refresh interval (default 60, min 5) |
 | `theme` | Color theme: `dark` (default) or `light` |

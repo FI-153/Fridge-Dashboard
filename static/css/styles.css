@@ -93,8 +93,9 @@ td.col {
   transform: rotate(45deg);
 }
 .trend_stable {
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
+  /* Base arrow already points right; stable needs no rotation. */
+  -webkit-transform: none;
+  transform: none;
 }
 
 /* Left column: two separate square cards stacked vertically, with a gap that

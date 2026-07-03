@@ -4,7 +4,7 @@
 
 - Add optional trend arrows. Set `entity_temperature_derivative` and/or
   `entity_humidity_derivative` to a Home Assistant derivative sensor and a
-  gray arrow below the value shows the trend (↗ rising, ↘ falling, ← stable).
+  gray arrow below the value shows the trend (↗ rising, ↘ falling, → stable).
   Leave them empty and the dashboard looks exactly as before.
 
 ## 1.1.2
