@@ -119,3 +119,23 @@ def test_power_entity_optional(monkeypatch):
     monkeypatch.delenv("ENTITY_POWER", raising=False)
     cfg = load_config()
     assert cfg.entity_power == ""
+
+
+def test_derivative_entities_default_blank(monkeypatch):
+    for k, v in REQUIRED.items():
+        monkeypatch.setenv(k, v)
+    monkeypatch.delenv("ENTITY_TEMPERATURE_DERIVATIVE", raising=False)
+    monkeypatch.delenv("ENTITY_HUMIDITY_DERIVATIVE", raising=False)
+    cfg = load_config()
+    assert cfg.entity_temperature_derivative == ""
+    assert cfg.entity_humidity_derivative == ""
+
+
+def test_derivative_entities_read_when_set(monkeypatch):
+    for k, v in REQUIRED.items():
+        monkeypatch.setenv(k, v)
+    monkeypatch.setenv("ENTITY_TEMPERATURE_DERIVATIVE", "sensor.t_rate")
+    monkeypatch.setenv("ENTITY_HUMIDITY_DERIVATIVE", "sensor.h_rate")
+    cfg = load_config()
+    assert cfg.entity_temperature_derivative == "sensor.t_rate"
+    assert cfg.entity_humidity_derivative == "sensor.h_rate"

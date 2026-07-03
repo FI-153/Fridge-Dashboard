@@ -28,8 +28,8 @@ def test_model_maps_readings_and_units():
     assert model["time"] == "12:45"
     assert model["refresh"] == 30
     assert model["theme"] == "dark"
-    assert model["temperature"] == {"value": "4.2", "unit": "°C", "ok": True, "color": _COLOR_ALERT}
-    assert model["humidity"] == {"value": "58", "unit": "%", "ok": True}
+    assert model["temperature"] == {"value": "4.2", "unit": "°C", "ok": True, "color": _COLOR_ALERT, "trend": None}
+    assert model["humidity"] == {"value": "58", "unit": "%", "ok": True, "trend": None}
     assert model["power"] == {"value": "120", "unit": "W", "ok": True}
 
 
@@ -55,14 +55,58 @@ def test_model_handles_sensor_error():
     client.get_state.return_value = {"result": "err"}
     model = build_dashboard_model(client, CFG, datetime(2026, 1, 1, 9, 5))
     assert model["time"] == "09:05"
-    assert model["humidity"] == {"value": "--", "unit": "", "ok": False}
+    assert model["humidity"] == {"value": "--", "unit": "", "ok": False, "trend": None}
 
 
 def test_model_handles_missing_unit():
     client = MagicMock()
     client.get_state.return_value = {"result": "OK", "state": "7", "unit": None}
     model = build_dashboard_model(client, CFG, datetime(2026, 1, 1, 0, 0))
-    assert model["temperature"] == {"value": "7", "unit": "", "ok": True, "color": _COLOR_ALERT}
+    assert model["temperature"] == {"value": "7", "unit": "", "ok": True, "color": _COLOR_ALERT, "trend": None}
+
+
+def _model_with_derivative(temp_rate_state):
+    """Model where the temperature derivative sensor returns `temp_rate_state`."""
+    client = MagicMock()
+    client.get_state.side_effect = lambda eid: {
+        "sensor.t": {"result": "OK", "state": "4.2", "unit": "°C"},
+        "sensor.h": {"result": "OK", "state": "50", "unit": "%"},
+        "sensor.t_rate": temp_rate_state,
+    }[eid]
+    cfg = Config(
+        "ip", "8123", "tok", "sensor.t", "sensor.h", "", 30, 6123, entity_temperature_derivative="sensor.t_rate"
+    )
+    return build_dashboard_model(client, cfg, datetime(2026, 1, 1, 0, 0))
+
+
+def test_trend_none_when_derivative_not_configured():
+    assert _model_with_temp("4.2")["temperature"]["trend"] is None
+
+
+def test_trend_up_when_positive():
+    model = _model_with_derivative({"result": "OK", "state": "0.5", "unit": "°C/min"})
+    assert model["temperature"]["trend"] == "up"
+
+
+def test_trend_down_when_negative():
+    model = _model_with_derivative({"result": "OK", "state": "-0.3", "unit": "°C/min"})
+    assert model["temperature"]["trend"] == "down"
+
+
+def test_trend_stable_when_zero():
+    for zero in ["0", "0.0"]:
+        model = _model_with_derivative({"result": "OK", "state": zero, "unit": "°C/min"})
+        assert model["temperature"]["trend"] == "stable"
+
+
+def test_trend_none_when_derivative_unreadable():
+    model = _model_with_derivative({"result": "err"})
+    assert model["temperature"]["trend"] is None
+
+
+def test_trend_none_when_derivative_non_numeric():
+    model = _model_with_derivative({"result": "OK", "state": "unavailable", "unit": ""})
+    assert model["temperature"]["trend"] is None
 
 
 def test_model_power_none_when_not_configured():

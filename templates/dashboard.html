@@ -35,6 +35,9 @@
           <div class="metric_value big">
             <span class="value">{{ temperature.value }}</span><span class="unit">{{ temperature.unit }}</span>
           </div>
+          {% if temperature.trend %}
+          <img class="trend trend_{{ temperature.trend }}" src="{{ url_for('static', filename='assets/arrow.svg') }}" alt="trend {{ temperature.trend }}">
+          {% endif %}
         </div>
       </td>
       <td class="col col_right">
@@ -43,6 +46,9 @@
           <div class="metric_value big">
             <span class="value">{{ humidity.value }}</span><span class="unit">{{ humidity.unit }}</span>
           </div>
+          {% if humidity.trend %}
+          <img class="trend trend_{{ humidity.trend }}" src="{{ url_for('static', filename='assets/arrow.svg') }}" alt="trend {{ humidity.trend }}">
+          {% endif %}
         </div>
       </td>
     </tr>

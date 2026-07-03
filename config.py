@@ -23,6 +23,10 @@ class Config:
     hass_url: str = ""
     # Color theme: "dark" (default) or "light".
     theme: str = "dark"
+    # Optional derivative (rate-of-change) sensors. When set, a trend arrow is
+    # shown below the temperature/humidity value; empty = no arrow.
+    entity_temperature_derivative: str = ""
+    entity_humidity_derivative: str = ""
 
 
 _REQUIRED = [
@@ -90,4 +94,6 @@ def load_config() -> Config:
         server_port=_positive_int_env("SERVER_PORT", 6123),
         hass_url=hass_url,
         theme=theme,
+        entity_temperature_derivative=os.environ.get("ENTITY_TEMPERATURE_DERIVATIVE", ""),
+        entity_humidity_derivative=os.environ.get("ENTITY_HUMIDITY_DERIVATIVE", ""),
     )

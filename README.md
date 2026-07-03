@@ -1,6 +1,6 @@
 # <img src='assets/icon.png' width='65' align='center' alt='icon'> Fridge Dashboard
 
-![Supports aarch64 Architecture](https://img.shields.io/badge/aarch64-yes-green.svg) ![Supports amd64 Architecture](https://img.shields.io/badge/amd64-yes-green.svg)
+[![Release](https://img.shields.io/github/v/release/FI-153/Fridge-Dashboard)](https://github.com/FI-153/Fridge-Dashboard/releases) ![Supports aarch64 Architecture](https://img.shields.io/badge/aarch64-yes-green.svg) ![Supports amd64 Architecture](https://img.shields.io/badge/amd64-yes-green.svg)
 
 A tiny Python/Flask web server that renders a single full-screen dashboard for an old tablet
 mounted on a fridge.
@@ -8,8 +8,10 @@ mounted on a fridge.
 <div align="center">
   <table>
     <tr>
-      <td><img width="400" alt="main_dark" src="https://github.com/user-attachments/assets/b1d2e44f-f590-4207-99c5-239f3ced3873" /></td>
-      <td><img width="400" alt="dashbpard_main" src="https://github.com/user-attachments/assets/64d034cc-8147-4665-b791-0d130498b9e2" /></td>
+      <td><img width="400" alt="main_dark" src="https://github.com/user-attachments/assets/0064e607-e775-447d-971b-5829da79bc3f" />
+</td>
+      <td><img width="400" alt="dashbpard_main" src="https://github.com/user-attachments/assets/092a8c60-a351-40b8-8e70-e61afca6af28" />
+</td>
     </tr>
   </table>
 </div>
@@ -47,6 +49,8 @@ All configuration is via environment variables. Copy `.env.example` to `.env` an
 | `ENTITY_TEMPERATURE`            | yes      | —       | Temperature sensor entity ID             |
 | `ENTITY_HUMIDITY`               | yes      | —       | Humidity sensor entity ID                |
 | `ENTITY_POWER`                  | no       | —       | Power sensor entity ID; empty → clock fills the left column |
+| `ENTITY_TEMPERATURE_DERIVATIVE` | no       | —       | Temperature derivative sensor; empty → no trend arrow       |
+| `ENTITY_HUMIDITY_DERIVATIVE`    | no       | —       | Humidity derivative sensor; empty → no trend arrow          |
 | `HASS_URL`                      | no       | —       | Full API base (`…/api/`); if set, replaces `HASS_IP`/`HASS_PORT` |
 | `THEME`                         | no       | `dark`  | Color theme: `dark` or `light`           |
 | `PAGE_REFRESH_INTERVAL_SECONDS` | no       | `60`    | Whole-page refresh interval (seconds)    |

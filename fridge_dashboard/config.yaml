@@ -3,7 +3,7 @@
 # with `version` below, instead of building on-device. entrypoint.sh maps the options
 # to the app's env vars and talks to Core through the Supervisor API.
 name: Fridge Dashboard
-version: "1.1.2"
+version: "1.2.0"
 slug: fridge_dashboard
 description: >-
   Full-screen dashboard (temperature, humidity, power) for a wall- or
@@ -25,11 +25,15 @@ options:
   entity_temperature: ""
   entity_humidity: ""
   entity_power: ""
+  entity_temperature_derivative: ""
+  entity_humidity_derivative: ""
   page_refresh_interval_seconds: 60
   theme: dark
 schema:
   entity_temperature: str
   entity_humidity: str
   entity_power: str?
+  entity_temperature_derivative: str?
+  entity_humidity_derivative: str?
   page_refresh_interval_seconds: int(5,)
   theme: list(dark|light)

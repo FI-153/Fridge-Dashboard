@@ -77,6 +77,26 @@ td.col {
   margin-bottom: 1.6vw;
 }
 
+/* Trend arrow below the value. Sized independently of .icon. Base asset points
+   right; rotated per trend (-webkit- prefix for Safari 9). */
+.trend {
+  width: 7vw;
+  height: 7vw;
+  margin-top: 1.4vw;
+}
+.trend_up {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.trend_down {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.trend_stable {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
 /* Left column: two separate square cards stacked vertically, with a gap that
    matches the gap between columns (2 x the .col padding).
    Heights are computed explicitly with calc() rather than via flex
