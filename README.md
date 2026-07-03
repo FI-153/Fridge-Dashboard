@@ -1,6 +1,6 @@
 # <img src='assets/icon.png' width='65' align='center' alt='icon'> Fridge Dashboard
 
-![Supports aarch64 Architecture](https://img.shields.io/badge/aarch64-yes-green.svg) ![Supports amd64 Architecture](https://img.shields.io/badge/amd64-yes-green.svg)
+[![Release](https://img.shields.io/github/v/release/FI-153/Fridge-Dashboard)](https://github.com/FI-153/Fridge-Dashboard/releases) ![Supports aarch64 Architecture](https://img.shields.io/badge/aarch64-yes-green.svg) ![Supports amd64 Architecture](https://img.shields.io/badge/amd64-yes-green.svg)
 
 A tiny Python/Flask web server that renders a single full-screen dashboard for an old tablet
 mounted on a fridge.
