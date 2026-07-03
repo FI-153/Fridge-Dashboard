@@ -29,7 +29,9 @@
       </td>
       <td class="col col_center">
         <div class="card metric_card">
-          <img class="icon" src="{{ url_for('static', filename='assets/thermometer.svg') }}" alt="temperature">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-label="temperature" role="img">
+            <path fill="{{ temperature.color }}" d="M32 6a9 9 0 0 0-9 9v21.6a13 13 0 1 0 18 0V15a9 9 0 0 0-9-9zm0 6a3 3 0 0 1 3 3v9h-6v-9a3 3 0 0 1 3-3z"/>
+          </svg>
           <div class="metric_value big">
             <span class="value">{{ temperature.value }}</span><span class="unit">{{ temperature.unit }}</span>
           </div>
