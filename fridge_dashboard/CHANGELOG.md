@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2
+
+- Color the temperature icon by its reading: green when 1 °C ≤ temp ≤ 4 °C,
+  red otherwise.
+- Add an add-on icon.
+
 ## 1.1.0
 
 - Make the power sensor optional. Leave `entity_power` empty and the clock fills
