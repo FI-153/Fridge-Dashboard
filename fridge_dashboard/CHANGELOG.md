@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- Bug fixes and experience improvements.
+
 ## 1.2.0
 
 - Add optional trend arrows. Set `entity_temperature_derivative` and/or

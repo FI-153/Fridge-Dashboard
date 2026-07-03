@@ -3,7 +3,7 @@
 # with `version` below, instead of building on-device. entrypoint.sh maps the options
 # to the app's env vars and talks to Core through the Supervisor API.
 name: Fridge Dashboard
-version: "1.2.0"
+version: "1.2.1"
 slug: fridge_dashboard
 description: >-
   Full-screen dashboard (temperature, humidity, power) for a wall- or
