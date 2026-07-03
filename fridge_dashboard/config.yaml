@@ -25,11 +25,15 @@ options:
   entity_temperature: ""
   entity_humidity: ""
   entity_power: ""
+  entity_temperature_derivative: ""
+  entity_humidity_derivative: ""
   page_refresh_interval_seconds: 60
   theme: dark
 schema:
   entity_temperature: str
   entity_humidity: str
   entity_power: str?
+  entity_temperature_derivative: str?
+  entity_humidity_derivative: str?
   page_refresh_interval_seconds: int(5,)
   theme: list(dark|light)
