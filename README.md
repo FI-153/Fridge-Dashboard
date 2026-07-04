@@ -23,16 +23,17 @@ script keeps the clock ticking between refreshes.
 ## Install as a Home Assistant add-on
 
 This repo is a Home Assistant **add-on repository**. Add-ons are installed from the
-**Add-on Store**.
+**Add-on Store** (now called "[Apps](https://www.home-assistant.io/apps/)").
 
 [![Add repository to your Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FFI-153%2FFridge-Dashboard)
 
-1. Click the badge above (or **Settings → Add-ons → Add-on Store → ⋮ → Repositories** and
-   paste `https://github.com/FI-153/Fridge-Dashboard`).
+1. Click the badge above (or **Settings → Apps → Install app → ⋮ → Repositories → Add** and
+   paste `https://github.com/FI-153/Fridge-Dashboard`) then click "Add" again.
 2. "Fridge Dashboard" appears in the store. Open it and click **Install**.
-3. On the **Configuration** tab, set the three sensors (`entity_temperature`,
-   `entity_humidity`, `entity_power`) and optionally the refresh interval, then **Start**.
-4. On the tablet, open `http://<home-assistant-ip>:6123/`.
+3. On the **Configuration** tab, set your sensors — temperature and humidity are
+   required; power and the two trend sensors are optional — then **Start**.
+4. I also suggest turning on "Start on boot", "Watchdog" and "Auto update".
+5. On the tablet, open `http://<home-assistant-ip>:6123/`.
 
 Changing the sensors later is just editing those fields and restarting the add-on. If port
 6123 is already in use, remap it under the add-on's **Network** panel to any free host port.
@@ -81,6 +82,8 @@ docker run -d --name fridge_dashboard -p 6123:6123 \
   -e ENTITY_TEMPERATURE=sensor.fridge_temperature \
   -e ENTITY_HUMIDITY=sensor.fridge_humidity \
   -e ENTITY_POWER=sensor.fridge_power \
+  -e ENTITY_TEMPERATURE_DERIVATIVE=sensor.fridge_temperature_trend \
+  -e ENTITY_HUMIDITY_DERIVATIVE=sensor.fridge_humidity_trend \
   fridge-dashboard
 ```
 
@@ -92,7 +95,9 @@ defaults for the optional ones, so it works with or without a `.env`:
 export HASS_IP=192.168.1.10 HASS_PORT=8123 HASS_TOKEN=... \
   ENTITY_TEMPERATURE=sensor.fridge_temperature \
   ENTITY_HUMIDITY=sensor.fridge_humidity \
-  ENTITY_POWER=sensor.fridge_power
+  ENTITY_POWER=sensor.fridge_power \
+  ENTITY_TEMPERATURE_DERIVATIVE=sensor.fridge_temperature_trend \
+  ENTITY_HUMIDITY_DERIVATIVE=sensor.fridge_humidity_trend
 make docker-up              # build + run in the background
 ```
 
