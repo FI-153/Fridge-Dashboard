@@ -49,7 +49,9 @@ With `homeassistant_api: true`, `entrypoint.sh` also points `HASS_URL` at the Su
 proxy (`http://supervisor/core/api/`) using the injected `SUPERVISOR_TOKEN`, so no host,
 port, or token is configured. The manifest's `image:` is a prebuilt GHCR image built by
 `.github/workflows/build-image.yaml` (buildx, `aarch64`/`amd64`) on push to `main`; bump
-`fridge_dashboard/config.yaml`'s `version` to ship an update.
+`fridge_dashboard/config.yaml`'s `version` to ship an update. Keep this version in sync
+across all three places on every bump: `fridge_dashboard/config.yaml` (what HA reads),
+`pyproject.toml`'s `version`, and `uv.lock` (run `uv lock` after editing `pyproject.toml`).
 
 ## Architecture
 

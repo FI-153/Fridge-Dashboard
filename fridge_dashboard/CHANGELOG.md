@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+
+- Better documentation.
+
 ## 1.2.1
 
 - Bug fixes and experience improvements.

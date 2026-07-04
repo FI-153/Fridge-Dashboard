@@ -1,6 +1,6 @@
 [project]
 name = "fridge-dashboard"
-version = "1.0.0"
+version = "1.2.2"
 description = "Home Assistant fridge dashboard for old devices, rendered server-side by Flask."
 requires-python = ">=3.11"
 dependencies = [
